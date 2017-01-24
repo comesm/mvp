@@ -22275,7 +22275,7 @@
 	        { className: 'well' },
 	        _react2.default.createElement(
 	          'form',
-	          { className: 'searchForm', onSubmit: function onSubmit(e) {
+	          { className: 'searchForm', value: 'My Text', onSubmit: function onSubmit(e) {
 	              return _this2.handleSubmit(e);
 	            } },
 	          _react2.default.createElement(
@@ -22286,7 +22286,7 @@
 	                return _this2.handleChange(e);
 	              } })
 	          ),
-	          _react2.default.createElement('input', { type: 'submit', value: 'submit' })
+	          _react2.default.createElement('input', { type: 'submit', value: 'Search Historical Data' })
 	        )
 	      );
 	    }

@@ -23,16 +23,16 @@ class Search extends React.Component {
   render() {
 
   return (<div className='well'>
-  <form className ='searchForm' onSubmit={(e) => this.handleSubmit(e)}>
+  <form className ='searchForm' value="My Text" onSubmit={(e) => this.handleSubmit(e)}>
   <label>
     Search:
     <input type="text" onChange={(e) => this.handleChange(e)} />
     </label>
-    <input type="submit" value="submit" />
+
+     <input type="submit" value="Search Historical Data" />
     </form>
   </div> )
 }
-
 
 }
 

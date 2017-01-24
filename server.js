@@ -7,12 +7,13 @@ var path = require('path');
 var econData = require('./dummyData.js');
 var app = express();
 var dataCache = {data:[]};
+var request = require('request');
 
 app.use(bodyParse.json());
 
 app.use(bodyParse.urlencoded({ extended: false }))
 
-
+//fred api key - a6ad301408e6f755651595dfdc02c247
 
 app.post('/data', function(req, res) {
     //console.log('request body', req.body);
@@ -33,6 +34,10 @@ app.use('/', express.static('src/client'));
 app.listen(3000, function() {
   console.log('listening - populating DB');
   //fetch data from remote source
+  //request.get()
+
+
+
   econData.data.forEach(function(item) {
 
   var data = new Data({name: item.name, date: item.date, number: item.number});
