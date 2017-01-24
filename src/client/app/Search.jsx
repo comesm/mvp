@@ -6,6 +6,7 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
+    this.state.dataSelection = 'historical';
   }
 
   handleSubmit(e) {
@@ -28,7 +29,10 @@ class Search extends React.Component {
     Search:
     <input type="text" onChange={(e) => this.handleChange(e)} />
     </label>
-
+      <select value={this.state.dataSelection} />
+       <option value='historical'>Historical</option>
+       <option value='current'>Current</option>
+      <select/>
      <input type="submit" value="Search Historical Data" />
     </form>
   </div> )

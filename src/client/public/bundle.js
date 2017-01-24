@@ -22247,6 +22247,7 @@
 	    var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 	
 	    _this.state = { value: '' };
+	    _this.state.dataSelection = 'historical';
 	    return _this;
 	  }
 	
@@ -22286,6 +22287,18 @@
 	                return _this2.handleChange(e);
 	              } })
 	          ),
+	          _react2.default.createElement('select', { value: this.state.dataSelection }),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'historical' },
+	            'Historical'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'current' },
+	            'Current'
+	          ),
+	          _react2.default.createElement('select', null),
 	          _react2.default.createElement('input', { type: 'submit', value: 'Search Historical Data' })
 	        )
 	      );
