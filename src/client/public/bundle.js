@@ -110,17 +110,15 @@
 	      this.setState({ text: textSearch });
 	
 	      // if(dataSelection === 'today') {
-	      //   // $.ajax({
-	      //   //   url: 'https://api.stlouisfed.org/fred/releases/dates',
+	      // $.ajax({
+	      //   url: 'https://api.stlouisfed.org/fred/releases/dates',
 	
-	      //   //   data: {api_key: 'a6ad301408e6f755651595dfdc02c247',
-	      //   //     dataType:'jsonp'},
-	      //   //   // dataType:'json',
-	      //   //   method:'GET',
-	      //   //   success: function(results) {
-	      //   //       console.log(results.release_dates);
-	      //   //   }
-	      //   // })
+	      //   data: {api_key: 'a6ad301408e6f755651595dfdc02c247'},
+	      //   method:'GET',
+	      //   success: function(results) {
+	      //       console.log(results);
+	      //   }
+	      // })
 	      // }
 	      // else {
 	      _jquery2.default.ajax({
@@ -130,7 +128,7 @@
 	          dataSelection: dataSelection },
 	        method: 'POST',
 	        success: function success(results) {
-	          console.log('37', results.data);
+	          //console.log('37', results.data);
 	          app.setState({ econData: results.data });
 	        }
 	      });

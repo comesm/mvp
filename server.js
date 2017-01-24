@@ -6,25 +6,35 @@ var Data = require('./src/Models/Data');
 var path = require('path');
 var econData = require('./dummyData.js');
 var app = express();
+var util = require('./util.js')
 var dataCache = {data:[]};
-var request = require('request');
 
 app.use(bodyParse.json());
 
 app.use(bodyParse.urlencoded({ extended: false }))
 
 //fred api key - a6ad301408e6f755651595dfdc02c247
-
+var requestCounter = 0;
 app.post('/data', function(req, res) {
     console.log('request body', req.body);
-    var searchKey = req.body.text
-    var responseLoad = dataCache.data.filter(function(value) {
-      return value.name.includes(searchKey);
-    })
-
-    //console.log('24', responseLoad);
-    res.send({data: responseLoad});
-
+    var searchKey = req.body.text;
+    if(requestCounter === 0 && req.body.dataSelection === 'today') {
+      requestCounter++;
+      util.fetch(function(err, data) {
+        if(err) {
+          res.send(404);
+        } else {
+          dataCache.data.push(data);
+          res.send({data: data});
+        }
+      });
+    }
+      else {
+      var responseLoad = dataCache.data.filter(function(value) {
+        return value.name.includes(searchKey);
+      });
+      res.send({data: responseLoad});
+    }
 });
 
 //app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
