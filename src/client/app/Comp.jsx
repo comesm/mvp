@@ -3,12 +3,18 @@ import DataRow from './DataRow.jsx'
 var Comp = (props) => {
   //entries
   return (
-  <table><th>{props.econData.map((item) =>
+  <table>
+  <tr>
+    <th>Date</th>
+    <th>Release</th>
+    <th>Value</th>
+  </tr>
+  {props.econData.map((item) =>
        <DataRow dataPoint={item} />
 
 
 )}
-</th></table>)
+</table>)
 }
 
 

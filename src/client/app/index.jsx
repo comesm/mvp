@@ -21,23 +21,23 @@ class App extends React.Component {
   }
 
   componentWillUpdate() {
-    console.log('24', this.state);
+
   }
   //search previously queried data
 
   populateData(textSearch) {
     var app = this;
     this.setState({text: textSearch});
-  $.ajax({
-      url: 'http://localhost:3000/data',
-      dataType:'json',
-      //add 'data' attribute to add query string
-      method: 'GET',
-      success: function(results) {
-        console.log('37', results.data);
-        app.setState({econData: results.data});
-      }
-    })
+      $.ajax({
+          url: 'http://localhost:3000/data',
+          dataType:'json',
+          data: {text: textSearch},
+          method: 'POST',
+          success: function(results) {
+            console.log('37', results.data);
+            app.setState({econData: results.data});
+          }
+        })
   }
 
   render() {

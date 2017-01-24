@@ -63,11 +63,11 @@
 	
 	var _Comp2 = _interopRequireDefault(_Comp);
 	
-	var _Search = __webpack_require__(/*! ./Search.jsx */ 179);
+	var _Search = __webpack_require__(/*! ./Search.jsx */ 180);
 	
 	var _Search2 = _interopRequireDefault(_Search);
 	
-	var _jquery = __webpack_require__(/*! jquery */ 180);
+	var _jquery = __webpack_require__(/*! jquery */ 181);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -102,9 +102,7 @@
 	    value: function getDbData(textSearch) {}
 	  }, {
 	    key: 'componentWillUpdate',
-	    value: function componentWillUpdate() {
-	      console.log('24', this.state);
-	    }
+	    value: function componentWillUpdate() {}
 	    //search previously queried data
 	
 	  }, {
@@ -115,8 +113,8 @@
 	      _jquery2.default.ajax({
 	        url: 'http://localhost:3000/data',
 	        dataType: 'json',
-	        //add 'data' attribute to add query string
-	        method: 'GET',
+	        data: { text: textSearch },
+	        method: 'POST',
 	        success: function success(results) {
 	          console.log('37', results.data);
 	          app.setState({ econData: results.data });
@@ -22127,7 +22125,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DataRow = __webpack_require__(/*! ./DataRow.jsx */ 181);
+	var _DataRow = __webpack_require__(/*! ./DataRow.jsx */ 179);
 	
 	var _DataRow2 = _interopRequireDefault(_DataRow);
 	
@@ -22139,12 +22137,27 @@
 	    'table',
 	    null,
 	    _react2.default.createElement(
-	      'th',
+	      'tr',
 	      null,
-	      props.econData.map(function (item) {
-	        return _react2.default.createElement(_DataRow2.default, { dataPoint: item });
-	      })
-	    )
+	      _react2.default.createElement(
+	        'th',
+	        null,
+	        'Date'
+	      ),
+	      _react2.default.createElement(
+	        'th',
+	        null,
+	        'Release'
+	      ),
+	      _react2.default.createElement(
+	        'th',
+	        null,
+	        'Value'
+	      )
+	    ),
+	    props.econData.map(function (item) {
+	      return _react2.default.createElement(_DataRow2.default, { dataPoint: item });
+	    })
 	  );
 	};
 	
@@ -22152,6 +22165,50 @@
 
 /***/ },
 /* 179 */
+/*!************************************!*\
+  !*** ./src/client/app/DataRow.jsx ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var DataRow = function DataRow(props) {
+	
+	    return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	            'td',
+	            null,
+	            props.dataPoint.date
+	        ),
+	        _react2.default.createElement(
+	            'td',
+	            null,
+	            props.dataPoint.name
+	        ),
+	        _react2.default.createElement(
+	            'td',
+	            null,
+	            props.dataPoint.number
+	        )
+	    );
+	};
+	
+	exports.default = DataRow;
+
+/***/ },
+/* 180 */
 /*!***********************************!*\
   !*** ./src/client/app/Search.jsx ***!
   \***********************************/
@@ -22241,7 +22298,7 @@
 	exports.default = Search;
 
 /***/ },
-/* 180 */
+/* 181 */
 /*!*********************************!*\
   !*** ./~/jquery/dist/jquery.js ***!
   \*********************************/
@@ -32468,50 +32525,6 @@
 	return jQuery;
 	} );
 
-
-/***/ },
-/* 181 */
-/*!************************************!*\
-  !*** ./src/client/app/DataRow.jsx ***!
-  \************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var DataRow = function DataRow(props) {
-	
-	    return _react2.default.createElement(
-	        'tr',
-	        null,
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            props.dataPoint.date
-	        ),
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            props.dataPoint.name
-	        ),
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            props.dataPoint.number
-	        )
-	    );
-	};
-	
-	exports.default = DataRow;
 
 /***/ }
 /******/ ]);
