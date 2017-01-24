@@ -25,18 +25,6 @@ class App extends React.Component {
     var app = this;
     this.setState({text: textSearch});
 
-    // if(dataSelection === 'today') {
-       // $.ajax({
-       //   url: 'https://api.stlouisfed.org/fred/releases/dates',
-
-       //   data: {api_key: 'a6ad301408e6f755651595dfdc02c247'},
-       //   method:'GET',
-       //   success: function(results) {
-       //       console.log(results);
-       //   }
-       // })
-    // }
-    // else {
       $.ajax({
           url: 'http://localhost:3000/data',
           dataType:'json',
@@ -44,7 +32,7 @@ class App extends React.Component {
                  dataSelection:dataSelection},
           method: 'POST',
           success: function(results) {
-            //console.log('37', results.data);
+            console.log('37', results.data);
             app.setState({econData: results.data});
           }
         })

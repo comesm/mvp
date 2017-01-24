@@ -16,7 +16,7 @@ app.use(bodyParse.urlencoded({ extended: false }))
 //fred api key - a6ad301408e6f755651595dfdc02c247
 var requestCounter = 0;
 app.post('/data', function(req, res) {
-    console.log('request body', req.body);
+    //console.log('request body', req.body);
     var searchKey = req.body.text;
     if(requestCounter === 0 && req.body.dataSelection === 'today') {
       requestCounter++;
@@ -24,15 +24,19 @@ app.post('/data', function(req, res) {
         if(err) {
           res.send(404);
         } else {
-          dataCache.data.push(data);
-          res.send({data: data});
+          //console.log(data);
+          dataCache.data = dataCache.data.concat(data);
+          console.log('29', dataCache);
+          res.send(dataCache);
         }
       });
     }
       else {
       var responseLoad = dataCache.data.filter(function(value) {
-        return value.name.includes(searchKey);
+        console.log(value);
+        return value.release_name.includes(searchKey);
       });
+      //console.log(responseLoad);
       res.send({data: responseLoad});
     }
 });
@@ -45,21 +49,21 @@ app.use('/', express.static('src/client'));
 app.listen(3000, function() {
   console.log('listening - populating DB');
 
-  econData.data.forEach(function(item) {
+//   econData.data.forEach(function(item) {
 
-  var data = new Data({name: item.name, date: item.date, number: item.number});
+//   var data = new Data({name: item.name, date: item.date, number: item.number});
 
-  dataCache.data.push(item);
-  Data.find({name:item.name, date: item.date}).then(function(item) {
-    //console.log('err', err);
-    if(item) {
-      console.log('element found in db - no need to add');
-    } else {
-      console.log('new data element');
-      data.save();
-    }
-  });
-});
+//   //dataCache.data.push(item);
+//   Data.find({name:item.name, date: item.date}).then(function(item) {
+//     //console.log('err', err);
+//     if(item) {
+//       console.log('element found in db - no need to add');
+//     } else {
+//       console.log('new data element');
+//       data.save();
+//     }
+//   });
+// });
 
 });
 

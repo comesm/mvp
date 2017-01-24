@@ -10,7 +10,7 @@ var Comp = (props) => {
     <th>Value</th>
   </tr>
   {props.econData.map((item) =>
-       <DataRow dataPoint={item} />
+       <DataRow linkClicked={props.linkClicked} dataPoint={item} />
 
 
 )}
