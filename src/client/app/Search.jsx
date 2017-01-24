@@ -6,35 +6,39 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
-    this.state.dataSelection = 'historical';
+    this.state.dataSelection = 'today';
+    this.changeCat = this.changeCat.bind(this);
   }
 
-  handleSubmit(e) {
+  changeCat(e) {
     e.preventDefault();
-    this.props.getDbData(this.state.value);
+    console.log(e.target.value);
+    this.setState({dataSelection: e.target.value});
   }
 
   handleChange(e) {
+    console.log('18', this.state.dataSelection);
     this.setState({value: e.target.value});
-    this.props.populateResults(this.state.value);
+    this.props.populateResults(this.state.value,
+    this.state.dataSelection);
   }
   //pass up the input
 
 
   render() {
 
-  return (<div className='well'>
-  <form className ='searchForm' value="My Text" onSubmit={(e) => this.handleSubmit(e)}>
+  return (<div id="first" className='well'>
+  <form className ='searchForm'>
   <label>
     Search:
     <input type="text" onChange={(e) => this.handleChange(e)} />
     </label>
-      <select value={this.state.dataSelection} />
-       <option value='historical'>Historical</option>
-       <option value='current'>Current</option>
-      <select/>
-     <input type="submit" value="Search Historical Data" />
     </form>
+    <select value={this.state.dataSelection} onChange={this.changeCat}>
+      <option value="today">Today</option>
+      <option value="week">This Week</option>
+      <option value="historical">Historical</option>
+    </select>
   </div> )
 }
 

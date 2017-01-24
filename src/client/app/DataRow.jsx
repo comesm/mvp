@@ -13,7 +13,4 @@ var DataRow = (props) => {
 
 }
 
-
-
-
 export default DataRow;

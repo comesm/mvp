@@ -16,11 +16,12 @@ app.use(bodyParse.urlencoded({ extended: false }))
 //fred api key - a6ad301408e6f755651595dfdc02c247
 
 app.post('/data', function(req, res) {
-    //console.log('request body', req.body);
+    console.log('request body', req.body);
     var searchKey = req.body.text
     var responseLoad = dataCache.data.filter(function(value) {
       return value.name.includes(searchKey);
     })
+
     //console.log('24', responseLoad);
     res.send({data: responseLoad});
 
@@ -33,10 +34,6 @@ app.use('/', express.static('src/client'));
 
 app.listen(3000, function() {
   console.log('listening - populating DB');
-  //fetch data from remote source
-  //request.get()
-
-
 
   econData.data.forEach(function(item) {
 

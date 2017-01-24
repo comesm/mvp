@@ -71,6 +71,10 @@
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
+	var _Offerings = __webpack_require__(/*! ./Offerings.jsx */ 182);
+	
+	var _Offerings2 = _interopRequireDefault(_Offerings);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -94,26 +98,36 @@
 	    return _this;
 	  }
 	
-	  //get current data
-	
+	  //search populateResultsviously queried data
 	
 	  _createClass(App, [{
 	    key: 'getDbData',
-	    value: function getDbData(textSearch) {}
-	  }, {
-	    key: 'componentWillUpdate',
-	    value: function componentWillUpdate() {}
-	    //search previously queried data
-	
+	    value: function getDbData() {}
 	  }, {
 	    key: 'populateData',
-	    value: function populateData(textSearch) {
+	    value: function populateData(textSearch, dataSelection) {
 	      var app = this;
 	      this.setState({ text: textSearch });
+	
+	      // if(dataSelection === 'today') {
+	      //   // $.ajax({
+	      //   //   url: 'https://api.stlouisfed.org/fred/releases/dates',
+	
+	      //   //   data: {api_key: 'a6ad301408e6f755651595dfdc02c247',
+	      //   //     dataType:'jsonp'},
+	      //   //   // dataType:'json',
+	      //   //   method:'GET',
+	      //   //   success: function(results) {
+	      //   //       console.log(results.release_dates);
+	      //   //   }
+	      //   // })
+	      // }
+	      // else {
 	      _jquery2.default.ajax({
 	        url: 'http://localhost:3000/data',
 	        dataType: 'json',
-	        data: { text: textSearch },
+	        data: { text: textSearch,
+	          dataSelection: dataSelection },
 	        method: 'POST',
 	        success: function success(results) {
 	          console.log('37', results.data);
@@ -126,7 +140,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { id: 'wrapper' },
 	        _react2.default.createElement(
 	          'h1',
 	          null,
@@ -22247,21 +22261,24 @@
 	    var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 	
 	    _this.state = { value: '' };
-	    _this.state.dataSelection = 'historical';
+	    _this.state.dataSelection = 'today';
+	    _this.changeCat = _this.changeCat.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Search, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(e) {
+	    key: 'changeCat',
+	    value: function changeCat(e) {
 	      e.preventDefault();
-	      this.props.getDbData(this.state.value);
+	      console.log(e.target.value);
+	      this.setState({ dataSelection: e.target.value });
 	    }
 	  }, {
 	    key: 'handleChange',
 	    value: function handleChange(e) {
+	      console.log('18', this.state.dataSelection);
 	      this.setState({ value: e.target.value });
-	      this.props.populateResults(this.state.value);
+	      this.props.populateResults(this.state.value, this.state.dataSelection);
 	    }
 	    //pass up the input
 	
@@ -22273,12 +22290,10 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'well' },
+	        { id: 'first', className: 'well' },
 	        _react2.default.createElement(
 	          'form',
-	          { className: 'searchForm', value: 'My Text', onSubmit: function onSubmit(e) {
-	              return _this2.handleSubmit(e);
-	            } },
+	          { className: 'searchForm' },
 	          _react2.default.createElement(
 	            'label',
 	            null,
@@ -22286,20 +22301,26 @@
 	            _react2.default.createElement('input', { type: 'text', onChange: function onChange(e) {
 	                return _this2.handleChange(e);
 	              } })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'select',
+	          { value: this.state.dataSelection, onChange: this.changeCat },
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'today' },
+	            'Today'
 	          ),
-	          _react2.default.createElement('select', { value: this.state.dataSelection }),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'week' },
+	            'This Week'
+	          ),
 	          _react2.default.createElement(
 	            'option',
 	            { value: 'historical' },
 	            'Historical'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'current' },
-	            'Current'
-	          ),
-	          _react2.default.createElement('select', null),
-	          _react2.default.createElement('input', { type: 'submit', value: 'Search Historical Data' })
+	          )
 	        )
 	      );
 	    }
@@ -32538,6 +32559,39 @@
 	return jQuery;
 	} );
 
+
+/***/ },
+/* 182 */
+/*!**************************************!*\
+  !*** ./src/client/app/Offerings.jsx ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 32);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Offerings = function Offerings() {
+	  return _react2.default.createElement(
+	    'div',
+	    { id: 'second' },
+	    'List offerings here'
+	  );
+	};
+	
+	exports.default = Offerings;
 
 /***/ }
 /******/ ]);
