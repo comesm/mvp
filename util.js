@@ -10,7 +10,13 @@ module.exports = {
         callback(null, data);
       }
     });
+  },
+
+  fetchDataPoint: function(callback) {
+    //request.get()
+    console.log('dataPoint', data);
   }
+
 }
 
 

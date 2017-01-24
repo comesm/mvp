@@ -9,22 +9,30 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {text: ''};
-    this.getDbData = this.getDbData.bind(this);
+    this.state = {text: '',
+      render: false,
+      dataPoint: null};
     this.populateData = this.populateData.bind(this);
     this.state.econData = [];
+    this.unRenderDataPage = this.unRenderDataPage.bind(this);
+  }
+
+  linkClicked(target) {
+    this.setState({dataPoint: target, render: true});
+
+  }
+
+  unRenderDataPage() {
+    this.setState({render: false});
   }
 
   //search populateResultsviously queried data
 
-  getDbData () {
-
-  }
-
   populateData(textSearch, dataSelection) {
+    //this.setState({text: '', dataPoint: target, render: true});
     var app = this;
     this.setState({text: textSearch});
-
+    console.log('32', this.state);
       $.ajax({
           url: 'http://localhost:3000/data',
           dataType:'json',
@@ -39,10 +47,12 @@ class App extends React.Component {
   }
 
   render() {
+    const data = this.state.render;
+
     return (<div id="wrapper"><h1> Search for Data Releases!</h1>
-    <Search populateResults={this.populateData} getDbData={this.getDbData} />
-    <Comp textSearch={this.state.text} econData={this.state.econData} />
-    </div>)
+      <Search populateResults={this.populateData} /> {data ? <Offerings unRender={this.unRenderDataPage} id={this.state.dataPoint} /> : <Comp linkClicked={this.linkClicked.bind(this)} textSearch={this.state.text} econData={this.state.econData}/>}
+
+     </div>)
   }
 }
 

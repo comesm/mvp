@@ -17,7 +17,6 @@ class Search extends React.Component {
   }
 
   handleChange(e) {
-    console.log('18', this.state.dataSelection);
     this.setState({value: e.target.value});
     this.props.populateResults(this.state.value,
     this.state.dataSelection);

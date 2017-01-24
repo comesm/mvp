@@ -41,29 +41,17 @@ app.post('/data', function(req, res) {
     }
 });
 
-//app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+
+app.post('/dataPoint', function(req, res) {
+  var id = req.body;
+
+});
 
 
 app.use('/', express.static('src/client'));
 
 app.listen(3000, function() {
   console.log('listening - populating DB');
-
-//   econData.data.forEach(function(item) {
-
-//   var data = new Data({name: item.name, date: item.date, number: item.number});
-
-//   //dataCache.data.push(item);
-//   Data.find({name:item.name, date: item.date}).then(function(item) {
-//     //console.log('err', err);
-//     if(item) {
-//       console.log('element found in db - no need to add');
-//     } else {
-//       console.log('new data element');
-//       data.save();
-//     }
-//   });
-// });
 
 });
 

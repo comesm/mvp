@@ -91,24 +91,35 @@
 	
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 	
-	    _this.state = { text: '' };
-	    _this.getDbData = _this.getDbData.bind(_this);
+	    _this.state = { text: '',
+	      render: false,
+	      dataPoint: null };
 	    _this.populateData = _this.populateData.bind(_this);
 	    _this.state.econData = [];
+	    _this.unRenderDataPage = _this.unRenderDataPage.bind(_this);
 	    return _this;
 	  }
 	
-	  //search populateResultsviously queried data
-	
 	  _createClass(App, [{
-	    key: 'getDbData',
-	    value: function getDbData() {}
+	    key: 'linkClicked',
+	    value: function linkClicked(target) {
+	      this.setState({ dataPoint: target, render: true });
+	    }
+	  }, {
+	    key: 'unRenderDataPage',
+	    value: function unRenderDataPage() {
+	      this.setState({ render: false });
+	    }
+	
+	    //search populateResultsviously queried data
+	
 	  }, {
 	    key: 'populateData',
 	    value: function populateData(textSearch, dataSelection) {
+	      //this.setState({text: '', dataPoint: target, render: true});
 	      var app = this;
 	      this.setState({ text: textSearch });
-	
+	      console.log('32', this.state);
 	      _jquery2.default.ajax({
 	        url: 'http://localhost:3000/data',
 	        dataType: 'json',
@@ -124,6 +135,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var data = this.state.render;
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'wrapper' },
@@ -132,8 +145,9 @@
 	          null,
 	          ' Search for Data Releases!'
 	        ),
-	        _react2.default.createElement(_Search2.default, { populateResults: this.populateData, getDbData: this.getDbData }),
-	        _react2.default.createElement(_Comp2.default, { textSearch: this.state.text, econData: this.state.econData })
+	        _react2.default.createElement(_Search2.default, { populateResults: this.populateData }),
+	        ' ',
+	        data ? _react2.default.createElement(_Offerings2.default, { unRender: this.unRenderDataPage, id: this.state.dataPoint }) : _react2.default.createElement(_Comp2.default, { linkClicked: this.linkClicked.bind(this), textSearch: this.state.text, econData: this.state.econData })
 	      );
 	    }
 	  }]);
@@ -22170,7 +22184,7 @@
   \************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -22185,27 +22199,23 @@
 	var DataRow = function DataRow(props) {
 	
 	    return _react2.default.createElement(
-	        "tr",
+	        'tr',
 	        null,
 	        _react2.default.createElement(
-	            "td",
+	            'td',
 	            null,
 	            props.dataPoint.date
 	        ),
 	        _react2.default.createElement(
-	            "td",
-	            null,
-	            _react2.default.createElement(
-	                "a",
-	                { href: "", onClick: function onClick() {
-	                        return props.linkClicked;
-	                    } },
-	                " ",
-	                props.dataPoint.release_name
-	            )
+	            'td',
+	            { onClick: function onClick(event) {
+	                    return props.linkClicked(props.dataPoint.release_id);
+	                } },
+	            ' ',
+	            props.dataPoint.release_name
 	        ),
 	        _react2.default.createElement(
-	            "td",
+	            'td',
 	            null,
 	            props.dataPoint.release_id
 	        )
@@ -22269,7 +22279,6 @@
 	  }, {
 	    key: 'handleChange',
 	    value: function handleChange(e) {
-	      console.log('18', this.state.dataSelection);
 	      this.setState({ value: e.target.value });
 	      this.props.populateResults(this.state.value, this.state.dataSelection);
 	    }
@@ -32566,6 +32575,8 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -32574,15 +32585,60 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _jquery = __webpack_require__(/*! jquery */ 181);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Offerings = function Offerings() {
-	  return _react2.default.createElement(
-	    'div',
-	    { id: 'second' },
-	    'List offerings here'
-	  );
-	};
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Offerings = function (_React$Component) {
+	  _inherits(Offerings, _React$Component);
+	
+	  function Offerings(props) {
+	    _classCallCheck(this, Offerings);
+	
+	    var _this = _possibleConstructorReturn(this, (Offerings.__proto__ || Object.getPrototypeOf(Offerings)).call(this, props));
+	
+	    _this.state = { attributes: null };
+	    return _this;
+	  }
+	
+	  _createClass(Offerings, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      _jquery2.default.ajax({
+	        url: 'http://localhost:3000/dataPoint',
+	        method: 'POST',
+	        data: { data_id: this.props.id },
+	        success: function success(data) {
+	          this.setState(attributes);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.props.unRender },
+	          'Back'
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Offerings;
+	}(_react2.default.Component);
 	
 	exports.default = Offerings;
 
