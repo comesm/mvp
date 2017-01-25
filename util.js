@@ -13,11 +13,6 @@ module.exports = {
   },
 
   fetchDataPoint: function(id, date, callback) {
-    //get the series IDs from the release id
-
-    // https://api.stlouisfed.org/fred/release/series?release_id=INPUT ID HERE api_key=a6ad301408e6f755651595dfdc02c247&file_type=json
-
-    //with the fetched series ids get the data
     request.get('https://api.stlouisfed.org/fred/release/series?release_id=' +id+'&api_key=a6ad301408e6f755651595dfdc02c247&file_type=json', function(err, response, body) {
       if(err) {
         console.log('30');
@@ -38,21 +33,7 @@ module.exports = {
       }
     });
   }
-
-
-//https://api.stlouisfed.org/fred/series/observations?series_id=GNPCA&observation_start=START_DATE&observation_end=END_DATE&api_key=a6ad301408e6f755651595dfdc02c247&file_type=json
-   // var series_id = id;
-    //console.log('dataPoint', data);
-  }
-
-
-
-
-//https://api.stlouisfed.org/fred/series?series_id=BOMTVLM133S&api_key=a6ad301408e6f755651595dfdc02c247&file_type=json
-
-
-
-
+}
 
 
 

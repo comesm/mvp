@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import ObservationTable from './ObservationTable.jsx';
 
 class Offerings extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {attributes: null}
+    this.state = {observations: []}
   }
 
   componentDidMount() {
@@ -17,8 +18,8 @@ class Offerings extends React.Component {
       data: {data_id: this.props.id, date: this.props.date},
       success: function(results) {
         var data = JSON.parse(results);
-        app.setState({attributes: data.observations});
-        console.log('data', data.observations);
+        console.log(data.observations);
+        app.setState({observations: data.observations});
       }
     });
   }
@@ -28,7 +29,8 @@ class Offerings extends React.Component {
     return (
     <div>
     <button onClick={this.props.unRender}>Back</button>
-    </div> )
+    <ObservationTable observations={this.state.observations} />
+    </div>)
   }
 
 }

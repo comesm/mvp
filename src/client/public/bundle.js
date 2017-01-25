@@ -32589,6 +32589,10 @@
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
+	var _ObservationTable = __webpack_require__(/*! ./ObservationTable.jsx */ 183);
+	
+	var _ObservationTable2 = _interopRequireDefault(_ObservationTable);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32605,7 +32609,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Offerings.__proto__ || Object.getPrototypeOf(Offerings)).call(this, props));
 	
-	    _this.state = { attributes: null };
+	    _this.state = { observations: [] };
 	    return _this;
 	  }
 	
@@ -32619,8 +32623,8 @@
 	        data: { data_id: this.props.id, date: this.props.date },
 	        success: function success(results) {
 	          var data = JSON.parse(results);
-	          app.setState({ attributes: data.observations });
-	          console.log('data', data.observations);
+	          console.log(data.observations);
+	          app.setState({ observations: data.observations });
 	        }
 	      });
 	    }
@@ -32635,7 +32639,8 @@
 	          'button',
 	          { onClick: this.props.unRender },
 	          'Back'
-	        )
+	        ),
+	        _react2.default.createElement(_ObservationTable2.default, { observations: this.state.observations })
 	      );
 	    }
 	  }]);
@@ -32644,6 +32649,103 @@
 	}(_react2.default.Component);
 	
 	exports.default = Offerings;
+
+/***/ },
+/* 183 */
+/*!*********************************************!*\
+  !*** ./src/client/app/ObservationTable.jsx ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 32);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _ObservationRow = __webpack_require__(/*! ./ObservationRow.jsx */ 184);
+	
+	var _ObservationRow2 = _interopRequireDefault(_ObservationRow);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ObservationTable = function ObservationTable(props) {
+	
+	  return _react2.default.createElement(
+	    'table',
+	    null,
+	    _react2.default.createElement(
+	      'tr',
+	      null,
+	      _react2.default.createElement(
+	        'th',
+	        null,
+	        'Date'
+	      ),
+	      _react2.default.createElement(
+	        'th',
+	        null,
+	        'Value'
+	      )
+	    ),
+	    props.observations.map(function (item) {
+	      return _react2.default.createElement(_ObservationRow2.default, { dataPoint: item });
+	    })
+	  );
+	};
+	
+	exports.default = ObservationTable;
+
+/***/ },
+/* 184 */
+/*!*******************************************!*\
+  !*** ./src/client/app/ObservationRow.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 32);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ObservationRow = function ObservationRow(props) {
+	
+	    return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	            'td',
+	            null,
+	            props.dataPoint.date
+	        ),
+	        _react2.default.createElement(
+	            'td',
+	            null,
+	            props.dataPoint.value
+	        )
+	    );
+	};
+	
+	exports.default = ObservationRow;
 
 /***/ }
 /******/ ]);
