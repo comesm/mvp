@@ -93,7 +93,9 @@
 	
 	    _this.state = { text: '',
 	      render: false,
-	      dataPoint: null };
+	      dataPoint: null,
+	      date: ''
+	    };
 	    _this.populateData = _this.populateData.bind(_this);
 	    _this.state.econData = [];
 	    _this.unRenderDataPage = _this.unRenderDataPage.bind(_this);
@@ -102,8 +104,8 @@
 	
 	  _createClass(App, [{
 	    key: 'linkClicked',
-	    value: function linkClicked(target) {
-	      this.setState({ dataPoint: target, render: true });
+	    value: function linkClicked(target, date) {
+	      this.setState({ dataPoint: target, render: true, date: date });
 	    }
 	  }, {
 	    key: 'unRenderDataPage',
@@ -119,7 +121,6 @@
 	      //this.setState({text: '', dataPoint: target, render: true});
 	      var app = this;
 	      this.setState({ text: textSearch });
-	      console.log('32', this.state);
 	      _jquery2.default.ajax({
 	        url: 'http://localhost:3000/data',
 	        dataType: 'json',
@@ -127,7 +128,6 @@
 	          dataSelection: dataSelection },
 	        method: 'POST',
 	        success: function success(results) {
-	          console.log('37', results.data);
 	          app.setState({ econData: results.data });
 	        }
 	      });
@@ -147,7 +147,7 @@
 	        ),
 	        _react2.default.createElement(_Search2.default, { populateResults: this.populateData }),
 	        ' ',
-	        data ? _react2.default.createElement(_Offerings2.default, { unRender: this.unRenderDataPage, id: this.state.dataPoint }) : _react2.default.createElement(_Comp2.default, { linkClicked: this.linkClicked.bind(this), textSearch: this.state.text, econData: this.state.econData })
+	        data ? _react2.default.createElement(_Offerings2.default, { unRender: this.unRenderDataPage, id: this.state.dataPoint, date: this.state.date }) : _react2.default.createElement(_Comp2.default, { linkClicked: this.linkClicked.bind(this), textSearch: this.state.text, econData: this.state.econData })
 	      );
 	    }
 	  }]);
@@ -22187,7 +22187,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(/*! react */ 1);
@@ -22198,28 +22198,28 @@
 	
 	var DataRow = function DataRow(props) {
 	
-	    return _react2.default.createElement(
-	        'tr',
-	        null,
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            props.dataPoint.date
-	        ),
-	        _react2.default.createElement(
-	            'td',
-	            { onClick: function onClick(event) {
-	                    return props.linkClicked(props.dataPoint.release_id);
-	                } },
-	            ' ',
-	            props.dataPoint.release_name
-	        ),
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            props.dataPoint.release_id
-	        )
-	    );
+	  return _react2.default.createElement(
+	    'tr',
+	    null,
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.dataPoint.date
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      { onClick: function onClick(event) {
+	          return props.linkClicked(props.dataPoint.release_id, props.dataPoint.date);
+	        } },
+	      ' ',
+	      props.dataPoint.release_name
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.dataPoint.release_id
+	    )
+	  );
 	};
 	
 	exports.default = DataRow;
@@ -32612,12 +32612,15 @@
 	  _createClass(Offerings, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var app = this;
 	      _jquery2.default.ajax({
-	        url: 'http://localhost:3000/dataPoint',
+	        url: 'http://localhost:3000/datapoint',
 	        method: 'POST',
-	        data: { data_id: this.props.id },
-	        success: function success(data) {
-	          this.setState(attributes);
+	        data: { data_id: this.props.id, date: this.props.date },
+	        success: function success(results) {
+	          var data = JSON.parse(results);
+	          app.setState({ attributes: data.observations });
+	          console.log('data', data.observations);
 	        }
 	      });
 	    }

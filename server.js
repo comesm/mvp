@@ -26,14 +26,12 @@ app.post('/data', function(req, res) {
         } else {
           //console.log(data);
           dataCache.data = dataCache.data.concat(data);
-          console.log('29', dataCache);
           res.send(dataCache);
         }
       });
     }
       else {
       var responseLoad = dataCache.data.filter(function(value) {
-        console.log(value);
         return value.release_name.includes(searchKey);
       });
       //console.log(responseLoad);
@@ -42,11 +40,18 @@ app.post('/data', function(req, res) {
 });
 
 
-app.post('/dataPoint', function(req, res) {
-  var id = req.body;
+app.post('/datapoint', function(req, res) {
+  var id = req.body.data_id;
+  var date = req.body.date;
+  util.fetchDataPoint(id, date, function(err, data) {
+    if(err) {
+      res.sendStatus(404);
+    } else {
+      res.send(data);
+    }
 
+  });
 });
-
 
 app.use('/', express.static('src/client'));
 

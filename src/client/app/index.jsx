@@ -11,14 +11,16 @@ class App extends React.Component {
     super(props);
     this.state = {text: '',
       render: false,
-      dataPoint: null};
+      dataPoint: null,
+      date: ''
+    };
     this.populateData = this.populateData.bind(this);
     this.state.econData = [];
     this.unRenderDataPage = this.unRenderDataPage.bind(this);
   }
 
-  linkClicked(target) {
-    this.setState({dataPoint: target, render: true});
+  linkClicked(target, date) {
+    this.setState({dataPoint: target, render: true, date: date});
 
   }
 
@@ -32,7 +34,6 @@ class App extends React.Component {
     //this.setState({text: '', dataPoint: target, render: true});
     var app = this;
     this.setState({text: textSearch});
-    console.log('32', this.state);
       $.ajax({
           url: 'http://localhost:3000/data',
           dataType:'json',
@@ -40,7 +41,6 @@ class App extends React.Component {
                  dataSelection:dataSelection},
           method: 'POST',
           success: function(results) {
-            console.log('37', results.data);
             app.setState({econData: results.data});
           }
         })
@@ -50,7 +50,7 @@ class App extends React.Component {
     const data = this.state.render;
 
     return (<div id="wrapper"><h1> Search for Data Releases!</h1>
-      <Search populateResults={this.populateData} /> {data ? <Offerings unRender={this.unRenderDataPage} id={this.state.dataPoint} /> : <Comp linkClicked={this.linkClicked.bind(this)} textSearch={this.state.text} econData={this.state.econData}/>}
+      <Search populateResults={this.populateData} /> {data ? <Offerings unRender={this.unRenderDataPage} id={this.state.dataPoint} date={this.state.date} /> : <Comp linkClicked={this.linkClicked.bind(this)} textSearch={this.state.text} econData={this.state.econData}/>}
 
      </div>)
   }

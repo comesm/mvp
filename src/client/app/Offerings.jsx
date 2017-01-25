@@ -10,12 +10,15 @@ class Offerings extends React.Component {
   }
 
   componentDidMount() {
+    var app = this;
     $.ajax({
-      url: 'http://localhost:3000/dataPoint',
+      url: 'http://localhost:3000/datapoint',
       method: 'POST',
-      data: {data_id: this.props.id},
-      success: function(data) {
-        this.setState(attributes: data)
+      data: {data_id: this.props.id, date: this.props.date},
+      success: function(results) {
+        var data = JSON.parse(results);
+        app.setState({attributes: data.observations});
+        console.log('data', data.observations);
       }
     });
   }
